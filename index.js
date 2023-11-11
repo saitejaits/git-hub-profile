@@ -4,11 +4,10 @@ const searchButtonEl = document.getElementById("searchBtn");
 const profileContainerEl = document.getElementById("profileContainer");
 const loadingEl = document.getElementById("loading");
 
+const generateProfile = (profile) => {
+  //3
 
-const generateProfile = (profile) => {//3
-    
-    return (
-       `
+  return `
        <div class="profile-box">
         <div class="top-section">
            <div class="left">
@@ -44,34 +43,33 @@ const generateProfile = (profile) => {//3
            </div>
        </div> 
     
-       `
-    );
+       `;
 };
 
-const fetchProfile = async () => {//1
-    const username = searchInputEl.value;
+const fetchProfile = async () => {
+  //1
+  const username = searchInputEl.value;
 
-    loadingEl.innerText = "loading.....";
-    loadingEl.style.color = "black";
+  loadingEl.innerText = "loading.....";
+  loadingEl.style.color = "black";
 
-    try {
-        const res = await fetch(`${url}/${username}`);
-        const data = await res.json();
+  try {
+    const res = await fetch(`${url}/${username}`);
+    const data = await res.json();
 
-        if(data.bio){
-            loadingEl.innerText = "" ;
-            profileContainerEl.innerHTML = generateProfile(data);
-        }else{
-            loadingEl.innerHTML = data.message;
-            loadingEl.style.color = "red";
-        }
-
-        console.log("data:-", data);
-    } catch (error) {
-        console.log({error});
-        loadingEl.innerText = "" ;
+    if (data.bio) {
+      loadingEl.innerText = "";
+      profileContainerEl.innerHTML = generateProfile(data);
+    } else {
+      loadingEl.innerHTML = data.message;
+      loadingEl.style.color = "red";
     }
+
+    console.log("data:-", data);
+  } catch (error) {
+    console.log({ error });
+    loadingEl.innerText = "";
+  }
 };
 
-searchButtonEl.addEventListener("click",fetchProfile);//2
-
+searchButtonEl.addEventListener("click", fetchProfile); //2
